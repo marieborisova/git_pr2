@@ -26,7 +26,7 @@ def load_image(name, colorkey=None):
 
 
 class Bomb(pygame.sprite.Sprite):
-    image = load_image("bomb.png", colorkey=-1)
+    image = load_image("bomb.png")
 
     def __init__(self, *group):
         # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
@@ -44,19 +44,23 @@ class Bomb(pygame.sprite.Sprite):
 def main():
     size = 400, 300
     screen = pygame.display.set_mode(size)
-    screen.fill((255,255,255))
+   # screen.fill((255,255,255))
     # создадим группу, содержащую все спрайты
     all_sprites = pygame.sprite.Group()
     for _ in range(50):
         Bomb(all_sprites)
-    all_sprites.draw(screen)
-    all_sprites.update()
+    #all_sprites.draw(screen)
+    #all_sprites.update()
    # pygame.display.update()
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        screen.fill(pygame.Color("white"))
+        all_sprites.draw(screen)
+        all_sprites.update()
+        pygame.display.flip()
 
     pygame.quit()
 
