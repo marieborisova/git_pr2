@@ -1,6 +1,6 @@
 import os
 import sys
-
+import random
 import pygame
 
 # Изображение не получится загрузить
@@ -8,11 +8,11 @@ import pygame
 pygame.init()
 size = width, height = 500, 500
 screen = pygame.display.set_mode(size)
+clock = pygame.time.Clock()
 
 
-def load_image(name, colorkey=-1):
+def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
-    #fullname = "data/owls.png"
 
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
@@ -32,17 +32,27 @@ def load_image(name, colorkey=-1):
 def main():
     size = 400, 300
     screen = pygame.display.set_mode(size)
-    pygame.display.set_caption('Сова')
+    screen.fill((255,255,255))
+    # создадим группу, содержащую все спрайты
+    all_sprites = pygame.sprite.Group()
 
-    image = load_image("owls1.png")
-    image1 = pygame.transform.scale(image, (200, 100))
-    image2 = pygame.transform.scale(image, (100, 200))
-    screen.blit(image, (150, 100))
-    screen.blit(image1, (0, 0))
-    screen.blit(image2, (100, 100))
+    # создадим спрайт
+    sprite = pygame.sprite.Sprite()
+    # определим его вид
+    bomb_image = load_image("bomb.png")
 
-    pygame.display.update()
+    for i in range(50):
+        # можно сразу создавать спрайты с указанием группы
+        bomb = pygame.sprite.Sprite(all_sprites)
+        bomb.image = bomb_image
+        bomb.rect = bomb.image.get_rect()
 
+        # задаём случайное местоположение бомбочке
+        bomb.rect.x = random.randrange(width)
+        bomb.rect.y = random.randrange(height)
+    all_sprites.draw(screen)
+    pygame.display.flip()
+   # pygame.display.update()
     running = True
     while running:
         for event in pygame.event.get():
@@ -50,6 +60,7 @@ def main():
                 running = False
 
     pygame.quit()
+
 
 
 if __name__ == '__main__':
