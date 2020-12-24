@@ -3,13 +3,12 @@ import random
 import sys
 
 import pygame
-
-pygame.init()
-size = WIDTH, HEIGHT = 500, 500
-screen = pygame.display.set_mode(size)
+width = 200
+height = 200
+screen_rect = (0, 0, width, height)
+screen = pygame.display.set_mode((height, width))
 clock = pygame.time.Clock()
 GRAVITY = 0.25
-
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
 
@@ -26,10 +25,6 @@ def load_image(name, colorkey=None):
     else:
         image = image.convert_alpha()
     return image
-
-
-screen_rect = (0, 0, WIDTH, HEIGHT)
-
 class Particle(pygame.sprite.Sprite):
     # сгенерируем частицы разного размера
     fire = [load_image("star.png")]
